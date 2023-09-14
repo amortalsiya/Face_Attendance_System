@@ -1,0 +1,29 @@
+{% extends 'userlogin/base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <div class="container">
+              {% if messages %}
+              {% for message in messages %}
+                <div class="alert alert-{{message.tags}}">{{message}}</div>
+              {% endfor %}
+            {% endif %}
+            <div class="row g-0">
+                <div class="col-sm-6 col-md-8" id="header-text">
+                  <h1 id="header-h1">Automatic Attendance System </h1>
+                  <p id="header-paragraph">Hands(Hassle!) Free Attandance Management</p>
+                  {% if not user.is_authenticated %}
+                     <a href="{% url 'login'%}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="body-link-row">Student</a>
+                     <a href="{% url 'admin:index'%}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="body-link-row">Admin</a>
+                     <a href="{% url 'markatt'%}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="body-link-row">Mark Attendance</a>
+                  {% elif user.is_superuser %}
+                     <a href="{% url 'face-down'%}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="body-link-row">Download Attendance</a>  
+                 {% elif not user.is_superuser %}
+                     <a href="{% url 'stud-down'%}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="body-link-row">Download Attendance</a>  
+                  {%endif%}
+                </div>
+
+                <div class="col-6 col-md-4" id="header-image"><img src="images/in-liquid-slide-2.svg " alt=""></div>
+              </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,50 @@
+{% extends 'userlogin/base.html' %} 
+{% load static %} 
+{% block content %}
+  <style>
+    #my_camera {
+      width: 320px;
+      height: 240px;
+      border: 1px solid black;
+    }
+  </style>
+  <div class="container">
+    {% if messages %}
+    {% for message in messages %}
+      <div id="message_container" class="alert alert-{{message.tags}}">{{message}}</div>
+    {% endfor %}
+  {% endif %}
+  <div id="my_camera"></div><br>
+  <input type="button" name="yes" value="Capture" onClick="take_snapshot()" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links">
+  <form method="POST" action="upload_webcam">
+   {% csrf_token %}
+   <div class="row g-0">
+    <div class="col-sm-6 col-md-8" id="header-text">
+      <input type="hidden" id="check" name="data"> 
+      <button class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links">Save</button>
+      <a href="{% url 'view'%}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> View </a> 
+    </div>
+  </div> 
+  </form>
+  <div id="results"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+</div>
+  <script>
+    Webcam.set({
+      width: 320,
+      height: 240,
+      image_format: "jpeg",
+      jpeg_quality: 90,
+    });
+    Webcam.attach("#my_camera");
+
+    function take_snapshot() {
+      Webcam.snap(function (data_uri) {
+        console.log(data_uri);
+        document.getElementById("check").value=data_uri;
+        document.getElementById("results").innerHTML =
+          '<img src="' + data_uri + '"/>';
+      });
+    }
+  </script>
+{% endblock content %}

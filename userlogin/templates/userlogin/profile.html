@@ -1,0 +1,12 @@
+{% extends 'userlogin/base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <h2>{{user.username}}</h2>
+        <h2>{{user.email}}</h2>
+            <a href="{% url 'change_password'%}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> Change Password</a>
+            <a href="{% url 'upload_comp'%}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> Upload via Computer</a>
+            <a href="{% url 'upload_webcam'%}" class="btn" style="color: white; background-color: #fd5e14;"type="submit" id="header-links"> Upload via Webcam</a>
+    </div>
+{% endblock %}
